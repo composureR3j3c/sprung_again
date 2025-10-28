@@ -7,4 +7,8 @@ import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Order> findByCustomerId(Long customerId);
+
+    List<Order> findByPriceGreaterThanEqual(Double price);
+
+    List<Order> findByQuantityGreaterThanEqual(Integer quantity);
 }

@@ -46,6 +46,14 @@ public class CustomerController {
     public ResponseEntity<Customer> get(@PathVariable Long id) {
         return repo.findById(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
+    @GetMapping("/search")
+public List<Customer> searchCustomers(@RequestParam(required = false) String name,
+                                      @RequestParam(required = false) String email) {
+    if (name != null) return repo.findByNameContainingIgnoreCase(name);
+    if (email != null) return repo.findByEmailContainingIgnoreCase(email);
+    return repo.findAll();
+}
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {

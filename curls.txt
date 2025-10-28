@@ -24,3 +24,5 @@ curl -X POST "http://localhost:9090/api/v1/orders/customer/1" \
 
 # Get customer order by ID
 curl -X GET "http://localhost:9090/api/v1/orders/customer/1"
+# search
+curl "http://localhost:9090/api/v1/customers/search?name=bereket"

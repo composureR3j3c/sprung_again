@@ -2,18 +2,28 @@ package com.bereket.safari.dto;
 
 import java.time.LocalDateTime;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class OrderDto {
 
     private Long id;
-    private String productName;
-    private int quantity;
-    private double price;
-    private LocalDateTime createdAt;
 
-    // Optional: Include customer info
+    @NotBlank(message = "Product name cannot be blank")
+    private String productName;
+
+    @NotNull(message = "Quantity is required")
+    @Min(value = 1, message = "Quantity must be at least 1")
+    private Integer quantity;
+
+    @NotNull(message = "Price is required")
+    @Min(value = 1, message = "Price must be positive")
+    private Double price;
+
+    private java.time.LocalDateTime createdAt;
     private Long customerId;
     private String customerName;
-
     public OrderDto() {}
 
     public OrderDto(Long id, String productName, int quantity, double price, LocalDateTime createdAt,
@@ -48,4 +58,6 @@ public class OrderDto {
 
     public String getCustomerName() { return customerName; }
     public void setCustomerName(String customerName) { this.customerName = customerName; }
+
+    
 }

@@ -1,5 +1,11 @@
 package com.bereket.safari.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -10,6 +16,11 @@ public class Customer {
     private String name;
     private String email;
     private String phone;
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    // @JsonIgnore
+    private List<Order> orders = new ArrayList<>();
 
     public Customer() {}
     public Customer(String name, String email, String phone) {
@@ -28,4 +39,8 @@ public class Customer {
 
     public String getPhone() { return phone; }
     public void setPhone(String phone) { this.phone = phone; }
+
+    public List<Order> getOrders() { return orders; }
+    public void setOrders(List<Order> orders) { this.orders = orders; }
+
 }

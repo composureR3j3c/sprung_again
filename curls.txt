@@ -16,3 +16,11 @@ curl -X PUT "http://localhost:9090/api/v1/customers/1" \
 
 # Delete customer by ID
 curl -X DELETE "http://localhost:9090/api/v1/customers/1"
+
+# Create a new customer order
+curl -X POST "http://localhost:9090/api/v1/orders/customer/1" \
+-H "Content-Type: application/json" \
+-d '{  "productName": "Laptop",  "quantity": 2,  "price": 1200 }'
+
+# Get customer order by ID
+curl -X GET "http://localhost:9090/api/v1/orders/customer/1"

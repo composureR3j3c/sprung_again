@@ -6,8 +6,13 @@ import com.bereket.safari.model.Order;
 import com.bereket.safari.repository.CustomerRepository;
 import com.bereket.safari.repository.OrderRepository;
 import jakarta.validation.Valid;
+
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.net.URI;
 import java.util.List;
@@ -114,6 +119,12 @@ public class OrderController {
             orders = orderRepo.findAll();
         }
         return orders.stream().map(this::mapToDto).toList();
+    }
+
+    @GetMapping("/paged")
+    public Page<OrderDto> getPagedOrders(@PageableDefault(size = 5) Pageable pageable) {
+        return orderRepo.findAll(pageable)
+                .map(this::mapToDto);
     }
 
 }

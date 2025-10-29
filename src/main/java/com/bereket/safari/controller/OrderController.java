@@ -1,6 +1,7 @@
 package com.bereket.safari.controller;
 
 import com.bereket.safari.dto.OrderDto;
+import com.bereket.safari.exception.ResourceNotFoundException;
 import com.bereket.safari.model.Customer;
 import com.bereket.safari.model.Order;
 import com.bereket.safari.repository.CustomerRepository;
@@ -29,15 +30,16 @@ public class OrderController {
         this.customerRepo = customerRepo;
     }
 
-    private OrderDto mapToDto(Order order) {
-        return new OrderDto(
-                order.getId(),
-                order.getProductName(),
-                order.getQuantity(),
-                order.getPrice(),
-                order.getCreatedAt(),
-                order.getCustomer().getId(),
-                order.getCustomer().getName());
+    private OrderDto mapToDto(Order o) {
+       return OrderDto.builder()
+            .id(o.getId())
+            .productName(o.getProductName())
+            .quantity(o.getQuantity())
+            .price(o.getPrice())
+            .createdAt(o.getCreatedAt())
+            .customerId(o.getCustomer().getId())
+            .customerName(o.getCustomer().getName())
+            .build();
     }
 
     // Create
@@ -47,7 +49,7 @@ public class OrderController {
             @Valid @RequestBody OrderDto dto) {
 
         Customer customer = customerRepo.findById(customerId)
-                .orElseThrow(() -> new RuntimeException("Customer not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Customer not found with id " + customerId));
 
         Order order = new Order();
         order.setProductName(dto.getProductName());

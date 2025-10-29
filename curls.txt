@@ -34,3 +34,7 @@ curl -X POST "http://localhost:9090/api/v1/auth/register" \
 -H "Content-Type: application/json" \
 -d '{"username": "bereket", "password": "12345"}'
 
+curl -X POST "http://localhost:9090/api/v1/auth/login" \
+-H "Content-Type: application/json" \
+-d '{"username":"bereket","password":"12345"}'
+

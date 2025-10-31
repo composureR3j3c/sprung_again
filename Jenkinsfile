@@ -21,21 +21,21 @@ pipeline {
         stage('Build') {
             steps {
                 echo "Compiling project..."
-                sh 'mvn clean compile'
+                bat 'mvn clean compile'
             }
         }
 
         stage('Test') {
             steps {
                 echo "Running tests..."
-                sh 'mvn test'
+                bat 'mvn test'
             }
         }
 
         stage('Package') {
             steps {
                 echo "Packaging application..."
-                sh 'mvn package -DskipTests'
+                bat 'mvn package -DskipTests'
                 archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
             }
         }
@@ -46,7 +46,7 @@ pipeline {
             }
             steps {
                 echo "Starting Spring Boot app for verification..."
-                sh '''
+                bat '''
                     PID=$(lsof -t -i:9090 || echo "")
                     if [ ! -z "$PID" ]; then kill -9 $PID; fi
                     nohup java -jar target/*.jar > app.log 2>&1 &
